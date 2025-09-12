@@ -4,18 +4,17 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 8 * * *" # Runs every day at 08:00 UTC
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Sync
-        uses: joshcai/leetcode-sync@v1.5
+        uses: joshcai/leetcode-sync@v1.7.1
         with:
           github-token: ${{ github.token }}
           leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
           leetcode-session: ${{ secrets.LEETCODE_SESSION }}
           destination-folder: my-folder
-          verbose: true
-          commit-header: '[LeetCode Sync]'
+          extensions-map: '{"postgresql":"sql"}'
