@@ -1,33 +1,29 @@
 /**
  * @param {Function} fn
- * @return {Function}
  */
 function memoize(fn) {
-
-    let memo = new Map();
-    let callCount = 0;
-
-    return function (...args) {
-
-        if (memo.has(JSON.stringify(args))) {
-            return memo.get(JSON.stringify(args));
-        } else {
-            callCount ++;
-            let result = fn(...args);
-            memo.set(JSON.stringify(args), result)
-            return result;
-        }
+    
+   const cache = {};
+  
+   return function(...args) {
+    const key = JSON.stringify(args);
+    
+    if (key in cache) {
+      return cache[key];
     }
+    
+    const result = fn.apply(this, args);
+    cache[key] = result;
+    
+    return result;
+  }
+  
 }
 
 
-/** 
- * let callCount = 0;
- * const memoizedFn = memoize(function (a, b) {
- *	 callCount += 1;
- *   return a + b;
- * })
- * memoizedFn(2, 3) // 5
- * memoizedFn(2, 3) // 5
- * console.log(callCount) // 1 
- */
+const memoizedSum = memoize(function(a, b) {
+  return a + b;
+});
+
+console.log(memoizedSum(2, 3)); // Output: Computing sum, 5
+console.log(memoizedSum(2, 3)); // Output: 5
