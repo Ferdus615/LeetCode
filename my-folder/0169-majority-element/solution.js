@@ -3,21 +3,26 @@
  * @return {number}
  */
 var majorityElement = function (nums) {
-    const match = new Map();
-    let result;
+    const table = new Map();
 
     for (let i = 0; i < nums.length; i++) {
-        if (!match.get(nums[i])) {
-            match.set(nums[i], 1)
+        if (!table.has(nums[i])) {
+            table.set(nums[i], 1);
         } else {
-            match.set(nums[i], (Number(match.get(nums[i]) + 1)))
+            let val = table.get(nums[i]);
+            table.set(nums[i], val + 1);
         }
-        match.forEach((value, key) => {
-            if (value > nums.length / 2) {
-                result = key;
-            }
-        })
     }
 
-    return result;
+    let maxFreq = 0;
+    let maxKey = 0;
+
+    for (let [key, value] of table.entries()) {
+        if (value > maxFreq) {
+            maxFreq = value;
+            maxKey = key;
+        }
+    }
+
+    return maxKey;
 };
