@@ -49,7 +49,7 @@ let sum = 0     → 1 operation
 let count = 5   → 1 operation
 ```
 
-Total = **2 operations**
+Total = **2 operations** (2)
 
 
 #### **B. The loop (runs N times)**
@@ -62,7 +62,7 @@ Inside the loop:
 
 Assume **3 operations per iteration**.
 
-Total = **3N**
+Total = **3N** [as every iteration in the loop will have this same operation]
 
 
 #### **C. Final constant statements (O(1))**
@@ -72,7 +72,7 @@ avg = sum / N    → 1 op
 return avg       → 1 op
 ```
 
-Total = **2 operations**
+Total = **2 operations** (2)
 
 ---
 
@@ -86,26 +86,69 @@ $$T(N) = 3N + 4$$
 
 ### **Step 3: Apply Big O Rules**
 
-#### 1. Drop lower-order terms
-
-`4` grows much slower than `3N`.
-
-$$T(N) \approx 3N$$
-
-#### 2. Drop constant coefficients
-
-The “3” in `3N` doesn’t matter in asymptotic growth.
+Let's now apply the Big O rules to this equation: $$T(N) = 3N + 4$$
 
 
-$$T(N) = O(N)$$
+#### **1. Dropping Lower-Order Terms (The +4)**
+
+Compare how fast **3N** grows vs **4** as N increases:
+
+| **N** | **3N** | **4** | **Which is bigger?**    |
+| ----- | ------ | ----- | ----------------------- |
+| 1     | 3      | 4     | 4 is slightly bigger    |
+| 5     | 15     | 4     | 3N starts growing       |
+| 10    | 30     | 4     | 3N dominates            |
+| 100   | 300    | 4     | 3N >> 4                 |
+| 1,000 | 3000   | 4     | 3N completely dominates |
+
+As (N) becomes large:
+
+* **3N becomes thousands**
+* **4 stays 4**
+
+So the “4” becomes irrelevant when talking about *growth*.
+That’s why:
+
+$$3N + 4 \approx 3N$$
 
 ---
 
-### **Final Answer**
+#### **2. Dropping Constant Coefficients (The 3)**
 
-$$\boxed{O(N)}$$
+Now compare **3N**, **2N**, and **10N**:
+
+| **N** | **2N** | **3N** | **10N** |
+| ----- | ------ | ------ | ------- |
+| 1     | 2      | 3      | 10      |
+| 10    | 20     | 30     | 100     |
+| 100   | 200    | 300    | 1000    |
+| 1,000 | 2000   | 3000   | 10000   |
+
+They all grow at the same rate — they are all linear. What matters in Big O is how fast the function grows as N increases, not the actual numerical values.
+
+The constants (2, 3, 10) affect the speed of execution for small inputs, but do not change the growth type. That’s why we can drop them when expressing Big O.
+
+So:
+
+* 2N → linear
+* 3N → linear
+* 10N → linear
+
+All are simply:
+
+$$O(N)$$
+
+Because Big O describes **growth behavior**, not exact speed.
 
 ---
+
+### **Final Big O**
+
+$$T(N) = 3N + 4 \rightarrow **O(N)**$$
+
+---
+
+
 
 ### Here is a Slightly Better Example
 
