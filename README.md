@@ -16,8 +16,54 @@ Both are expressed using **Big O notation** (O(...)), which focuses on the **wor
 
 * _Note: By convention, Big O describes the worst-case growth rate of an algorithm._
 
+
+
+
+
 ---
-## 2. How to Calculate Time Complexity (Big O Notation)
+---
+
+
+
+
+## 2. What Complexity Tells Us
+
+Complexity tells us **how the algorithm's performance scales** with an increasing input size, which is critical for predicting behavior when dealing with large datasets.
+
+#### A. Predictability
+It allows a developer to **predict** how much slower an algorithm will get if the input size is doubled, tripled, or grows to a million.
+
+| Complexity | Growth Description | Effect of Doubling $N$ | Example |
+| :--- | :--- | :--- | :--- |
+| **$O(1)$** | **Constant** | Time remains the same. | Array lookup by index. |
+| **$O(\log N)$** | **Logarithmic** | Time increases by a small, constant amount. | Binary Search. |
+| **$O(N)$** | **Linear** | Time roughly doubles. | Simple loop through an array. |
+| **$O(N^2)$** | **Quadratic** | Time quadruples ($2^2$). | Nested loops, simple selection sort. |
+| **$O(2^N)$** | **Exponential** | Time doubles for every single item added. | Brute-force Fibonacci or traveling salesman problem. |
+
+![My Image](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*5ZLci3SuR0zM_QlZOADv8Q.jpeg)
+
+
+#### B. Comparability
+It allows two algorithms designed to solve the same problem (e.g., two different sorting algorithms) to be objectively compared based on their long-term efficiency, regardless of the hardware they are run on.
+
+
+
+
+
+
+
+---
+---
+
+
+
+
+
+
+
+
+## 3. How to Calculate Time Complexity (Big O Notation)
 
 **We will analyze this function:**
 
@@ -38,7 +84,8 @@ function processArray(arr) {
   return avg;
 }
 ```
----
+
+
 
 ### **Step 1: Count Elementary Operations**
 
@@ -74,7 +121,7 @@ return avg       → 1 op
 
 Total = **2 operations** (2)
 
----
+
 
 ### **Step 2: Build the Time Function _T(N)_**
 
@@ -82,7 +129,8 @@ $$T(N) = \underbrace{2}_{\text{Setup}} + \underbrace{3N}_{\text{Loop}} + \underb
 
 $$T(N) = 3N + 4$$
 
----
+
+
 
 ### **Step 3: Apply Big O Rules**
 
@@ -111,7 +159,8 @@ That’s why:
 
 $$3N + 4 \approx 3N$$
 
----
+
+
 
 #### **2. Dropping Constant Coefficients (The 3)**
 
@@ -140,14 +189,14 @@ $$O(N)$$
 
 Because Big O describes **growth behavior**, not exact speed.
 
----
 
-### **Final Big O**
+
+#### **3. Final Big O**
 
 $$T(N) = 3N + 4 \rightarrow **O(N)**$$
 
----
 
+---
 
 
 ### Here is a Slightly Better Example
@@ -183,31 +232,134 @@ $$\boxed{O(N^2)}$$
 
 
 
+
+
+
+
+
+
 ---
 ---
 
 
 
-## 3. What Complexity Tells Us
 
-Complexity tells us **how the algorithm's performance scales** with an increasing input size, which is critical for predicting behavior when dealing with large datasets.
 
-#### A. Predictability
-It allows a developer to **predict** how much slower an algorithm will get if the input size is doubled, tripled, or grows to a million.
 
-| Complexity | Growth Description | Effect of Doubling $N$ | Example |
+
+
+
+
+
+
+## 4. How to Calculate Space Complexity (Big O Notation)
+
+Space complexity measures the amount of memory (space) an algorithm needs to run to completion. We only count the **additional space** needed, excluding the space required for the input itself (the `arr` array).
+
+We will analyze the memory usage of the variables in this function:
+
+```javascript
+function processArray(arr) {
+  let sum = 0;           // Step A: simple statement
+  let count = 5;         // Step A: simple statement
+
+  // Step B: Single loop
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i];
+  }
+
+  // Step C: Final constant-time operations
+  let avg = sum / arr.length;
+  return avg;
+}
+```
+
+#### Step 1: Count Additional Space Used
+
+We count the variables declared within the function. Since we are using basic primitive types (numbers), each takes up a constant amount of space, regardless of the size of the input array $N$.
+
+| Variable | Type | Space Used | Notes |
 | :--- | :--- | :--- | :--- |
-| **$O(1)$** | **Constant** | Time remains the same. | Array lookup by index. |
-| **$O(\log N)$** | **Logarithmic** | Time increases by a small, constant amount. | Binary Search. |
-| **$O(N)$** | **Linear** | Time roughly doubles. | Simple loop through an array. |
-| **$O(N^2)$** | **Quadratic** | Time quadruples ($2^2$). | Nested loops, simple selection sort. |
-| **$O(2^N)$** | **Exponential** | Time doubles for every single item added. | Brute-force Fibonacci or traveling salesman problem. |
+| `sum` | Number | Constant Space | Stores a single number (integer/float). |
+| `count` | Number | Constant Space | Stores a single number. |
+| `i` | Number | Constant Space | The loop counter (an integer). |
+| `avg` | Number | Constant Space | Stores a single number. |
+| **Total** | | **4 units of Constant Space** | The memory usage does not depend on $N$. |
 
-![My Image](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*5ZLci3SuR0zM_QlZOADv8Q.jpeg)
+#### Step 2: Build the Space Function $S(N)$
+
+Since the space used is constant and does not depend on the input size $N$:
+
+$$S(N) = 1 + 1 + 1 + 1$$
+
+$$S(N) = 4$$
+
+### Step 3: Apply Big O Rules
+
+Let's now apply the Big O rules to this equation: $S(N) = 4$
+
+1.  **Dropping Lower-Order Terms** (Not applicable, only a constant term).
+2.  **Dropping Constant Coefficients** (The $4$):
+
+<!-- end list -->
+
+  * When the space function is purely a constant value, we simplify it to $O(1)$. It represents a memory usage that stays the same no matter how large $N$ gets.
+
+$$\mathbf{S(N) = 4 \rightarrow O(1)}$$
+
+-----
+
+#### Final Space Complexity
+
+The final Big O Space Complexity for the `processArray` function is:
+
+$$\mathbf{O(1)}$$
+
+  * This is known as **Constant Space**. The algorithm is highly space-efficient because it only requires a fixed, small amount of memory for its variables, regardless of whether the input array has 10 elements or 1 million elements.
+
+-----
+
+#### Example with Time and Space
+
+Here is the analysis for the slightly better example you provided:
+
+```javascript
+function example(arr) {
+  // O(1)
+  let x = 10;
+
+  // O(N)
+  for (let i = 0; i < arr.length; i++) { // Loop 1: runs N times
+    x += arr[i];
+  }
+
+  // O(N^2)
+  for (let i = 0; i < arr.length; i++) { // Outer loop: runs N times
+    for (let j = 0; j < arr.length; j++) { // Inner loop: runs N times
+      console.log(i, j);
+    }
+  }
+}
+```
+
+#### Time Complexity Analysis
+
+  * **Time Function:** $T(N) = 1 (\text{for } x) + 3N (\text{Loop 1}) + 4N^2 (\text{Nested Loops})$
+    $$T(N) = 4N^2 + 3N + 1$$
+  * **Dominant term:** $N^2$ (Quadratic term)
+  * **Final complexity:** $$\mathbf{O(N^2)}$$
+
+#### Space Complexity Analysis
+
+  * **Additional Space Used:** Variables declared are `x`, `i`, and `j`. All are primitive number types.
+    $$S(N) = 1 (\text{for } x) + 1 (\text{for } i) + 1 (\text{for } j)$$
+    $$S(N) = 3$$
+  * **Dominant term:** 3 (A constant)
+  * **Final complexity:** $$\mathbf{O(1)}$$
 
 
-#### B. Comparability
-It allows two algorithms designed to solve the same problem (e.g., two different sorting algorithms) to be objectively compared based on their long-term efficiency, regardless of the hardware they are run on.
+
+
 
 
 
@@ -216,7 +368,13 @@ It allows two algorithms designed to solve the same problem (e.g., two different
 
 
 
-## 4. Why the Constants Don't Matter
+
+
+
+
+
+
+## 5. Why the Constants Don't Matter
 
 Constants (like the '2' in $2N$ or the '5' in $5N^2$) are dropped in Big O calculation for three main reasons:
 
@@ -236,12 +394,25 @@ Mathematically, Big O is defined using limits, where constants naturally disappe
 we are saying that for large $N$, $T(N)$ is **bounded** by some constant multiple of $N$. The exact constant is irrelevant for defining the upper bound of the growth class.
 
 
+
+
+
+
+
+
 ---
 ---
 
 
 
-## **5. Why Time & Space Complexity Matter (Real-Life Examples)**
+
+
+
+
+
+
+
+## 6. Why Time & Space Complexity Matter (Real-Life Examples)
 
 Time and space complexities are not just theoretical concept. They impact real systems you use every day. Understanding them helps you write software that remains efficient even as data grows.
 
@@ -256,14 +427,17 @@ This is not a huge time maybe, but everyday & everytime for a simple contact sea
 
 As your contact list grows to thousands, O(log N) still remains very fast.
 
----
+
+
 
 #### **2. Social Media Feed Loading**
 
 Platforms like Facebook, TikTok, or Instagram must search through millions of posts, rank them by relevance, and deliver the results within milliseconds. Without efficient algorithms, loading your feed, 
 reels, or photos would feel slow and unresponsive. Efficient algorithms — combined with clever engineering techniques used in large-scale systems — make this instant experience possible.
 
----
+
+
+
 
 #### **3. E-commerce Product Search**
 
@@ -279,7 +453,10 @@ To make this possible, Amazon uses powerful algorithms such as:
 
 These algorithms help reduce what could take **seconds** (or more) down to just **milliseconds**, giving you fast and accurate search results instantly.
 
----
+
+
+
+
 
 #### **4. Navigation Apps (Google Maps, Uber)**
 
@@ -295,16 +472,29 @@ Algorithms like:
 
 Because of these optimized algorithms, you get route suggestions, travel time estimates, and alternative paths **in just a fraction of a second**, even in large cities with complex road networks.
 
----
+
+
+
+
 
 #### **Why It Matters**
 
 Better complexity → faster apps → better user experience → lower cost on servers.
 
+
+
+
+
+
 ---
 ---
 
-## **6. Common Pitfalls & Misunderstandings**
+
+
+
+
+
+## 7. Common Pitfalls & Misunderstandings
 
 Many beginners misunderstand Big O notation. Here are common mistakes:
 
@@ -319,7 +509,7 @@ Actual time depends on:
 
 But Big O ignores those hardware-specific details.
 
----
+
 
 #### **2. O(N + N²) = O(N³)**
 
@@ -328,7 +518,7 @@ You only keep the **largest** term:
 O(N + N²) → **O(N²)**
 O(N² + N³) → **O(N³)**
 
----
+
 
 #### **3. Two loops always mean O(N²).**
 
@@ -342,14 +532,16 @@ for (let j = 0; j < N; j++) {}     // O(N)
 Total = **O(N + N) = O(N)**
 This is **not** nested, so **not** O(N²).
 
----
+
+
 
 #### **4. More code = worse complexity.**
 
 Not true.
 You can have 50 lines of **O(1)** code and 3 lines of **O(N²)** code.
 
----
+
+
 
 #### **5. Ignoring average-case vs worst-case**
 
