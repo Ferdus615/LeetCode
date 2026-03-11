@@ -1,11 +1,3 @@
-SELECT 
-    activity_date AS day,
-    COUNT(DISTINCT user_id) AS active_users
-FROM activity
-WHERE 
-    activity_date >= DATE '2019-07-27' - INTERVAL '29 days'
-    AND activity_date <= DATE '2019-07-27'
-    AND activity_type IS NOT NULL
-GROUP BY activity_date
-ORDER BY activity_date;
+-- Write your PostgreSQL query statement below
+select activity_date as day, count(distinct user_id) as active_users from Activity where activity_type is not null and activity_date between '2019-06-28' and '2019-07-27' group by activity_date
 
